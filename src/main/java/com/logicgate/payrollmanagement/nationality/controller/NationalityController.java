@@ -40,8 +40,8 @@ public class NationalityController {
                 .fetchByNationality(nationality)), HttpStatus.OK);
     }
 
-    @GetMapping("/findAllNationality")
-    public ResponseEntity<List<NationalityDto>> findAllNationality(@RequestParam("pageNumber") int pageNumber,
+    @GetMapping("/findAllNationalities")
+    public ResponseEntity<List<NationalityDto>> getAllNationality(@RequestParam(defaultValue = "0") int pageNumber,
                                                                    @RequestParam("pageSize") int pageSize) {
         return new ResponseEntity<>(nationalityService.fetchAllNationality(pageNumber, pageSize)
                 .stream().map(this::convertNationalityToDto)
@@ -68,6 +68,17 @@ public class NationalityController {
         nationalityService.deleteAllNationality();
         return ResponseEntity.noContent().build();
     }
+
+
+
+
+
+
+
+
+
+
+
 
     private NationalityDto convertNationalityToDto(Nationality nationality) {
         NationalityDto nationalityDto = new NationalityDto();

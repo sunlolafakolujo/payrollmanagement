@@ -24,7 +24,7 @@ public class NationalityServiceImpl implements NationalityService {
         Optional<Nationality> optionalNationality = nationalityRepository
                 .findByNationality(nationality.getNationality());
         if (optionalNationality.isPresent()) {
-            throw new NationalityNotFoundException("Nationality already exist");
+            throw new NationalityNotFoundException("Nationality " + nationality.getNationality() + " already exists");
         }
         return nationalityRepository.save(nationality);
     }

@@ -1,9 +1,8 @@
-package com.logicgate.payrollmanagement.nationality.controller;
+package com.logicgate.payrollmanagement.userrole.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.logicgate.payrollmanagement.AbstractContainerBaseTest;
-import com.logicgate.payrollmanagement.nationality.model.Nationality;
-import com.logicgate.payrollmanagement.nationality.service.NationalityService;
+import com.logicgate.payrollmanagement.userrole.model.Role;
+import com.logicgate.payrollmanagement.userrole.service.RoleService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,7 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -22,102 +22,104 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class NationalityControllerTest extends AbstractContainerBaseTest {
+class RoleControllerTest {
     @Autowired
-    private NationalityService nationalityService;
+    private RoleService roleService;
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
 
-    Nationality nationality;
+    Role role;
 
     @BeforeEach
     void setUp() {
-        nationality = new Nationality();
+        role = new Role();
     }
 
     @Test
     @Order(1)
-    void testThatWhenYouCallAddNationalityMethod_thenNationalityIsSaved() throws Exception {
-        String nationalityName = "Cameroonian";
-        nationality.setNationality(nationalityName);
-        this.mockMvc.perform(post("/api/payroll/addNationality")
+    void testThatWhenYouCallAddRoleMethod_thenRoleIsCreated() throws Exception {
+        String roleName = "payroll_admin";
+        role.setRoleName(roleName);
+        role.setRoleDescription("Payroll Administrator");
+
+        this.mockMvc.perform(post("/api/payroll/addRole")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(nationality))
+                        .content(objectMapper.writeValueAsString(role))
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.nationality").value(nationalityName))
+                .andExpect(jsonPath("$.roleName").value(roleName))
                 .andReturn();
     }
 
     @Test
     @Order(2)
-    void testThatWhenGetNationalityByIdMethodIsCalled_thenNationalityIsReturned() throws Exception {
-        String nationalityName = "American";
-        this.mockMvc.perform(get("/api/payroll/findNationalityById?id=2")
+    void testThatWhenYouCallGetRoleByIdMethod_thenRoleIsReturned() throws Exception {
+        String roleName = "admin";
+        this.mockMvc.perform(get("/api/payroll/findRoleById?id=1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.nationality").value(nationalityName))
+                .andExpect(jsonPath("$.roleName").value(roleName))
                 .andReturn();
     }
 
     @Test
     @Order(3)
-    void testThatWhenYouCallGetNationalityByNameMethod_thenNationalityIsReturned() throws Exception {
-        Long id = 12L;
-        this.mockMvc.perform(get("/api/payroll/findNationalityByName?nationality=British")
+    void testThatWhenYouCallGetRoleByNameMethod_thenRoleIsReturned() throws Exception {
+        String roleDescription = "Payroll Administrator";
+        this.mockMvc.perform(get("/api/payroll/findRoleName?roleName=payroll_admin")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.roleDescription").value(roleDescription))
                 .andReturn();
     }
 
     @Test
     @Order(4)
-    void testThatWhenYouCallGetAllNationalityMethod_thenNationalitiesAreReturned() throws Exception {
-        String nationalityName = "American";
-        this.mockMvc.perform(get("/api/payroll/findAllNationalities?pageNumber=0&pageSize=8")
+    void testThatWhenYouCallGetAllRolesMethod_thenRoleAreReturned() throws Exception {
+        String roleName = "payroll_admin";
+        this.mockMvc.perform(get("/api/payroll/findAllRoles?pageNumber=0&pageSize=2")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(8)))
-                .andExpect(jsonPath("$[1].nationality").value(nationalityName))
+                .andExpect(jsonPath("$.*", hasSize(2)))
+                .andExpect(jsonPath("$[1].roleName").value(roleName))
                 .andReturn();
     }
 
     @Test
     @Order(5)
-    void testThatWhenYouCallEditNationalityMethod_thenNationalityIsUpdated() throws Exception {
+    void testThatWhenYouCallEditRoleMethod_thenRoleIsUpdated() throws Exception {
         Long id = 1L;
-        nationality = nationalityService.fetchById(id);
-        nationality.setNationality("Nigeria");
-        nationalityService.editNationality(nationality, id);
+        role = roleService.fetchById(id);
+        role.setRoleName("super_admin");
+        roleService.editRole(role, id);
 
-        this.mockMvc.perform(put("/api/payroll/editNationality?id=1")
+        this.mockMvc.perform(put("/api/payroll/editRole?id=1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer ")
-                        .content(objectMapper.writeValueAsString(nationality)))
+                        .content(objectMapper.writeValueAsString(role))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(nationality.getId()))
-                .andExpect(jsonPath("$.nationality").value(nationality.getNationality()))
+                .andExpect(jsonPath("$.id").value(role.getId()))
+                .andExpect(jsonPath("$.roleName").value("super_admin"))
                 .andReturn();
     }
 
     @Test
     @Order(6)
-    void testThatWhenYouCallDeleteNationalMethod_thenNationalityIsDeleted() throws Exception {
-        this.mockMvc.perform(delete("/api/payroll/deleteNationality?nationality=Cameroonian")
+    void testThatWhenYouCallDeleteRoleByNameMethod_thenRoleIsDeleted() throws Exception {
+        this.mockMvc.perform(delete("/api/payroll/deleteRole?roleName=payroll_admin")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "))
                 .andDo(print())
@@ -127,8 +129,8 @@ class NationalityControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @Order(7)
-    void testThatWhenYouCallDeleteAllNationalityMethod_thenNationalityAreDeleted() throws Exception {
-        this.mockMvc.perform(delete("/api/payroll/deleteAllNationality")
+    void testThatWhenYouCallDeleteAllRoles_thenRolesAreDeleted() throws Exception {
+        this.mockMvc.perform(delete("/api/payroll/deleteAllRoles")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "))
                 .andDo(print())
