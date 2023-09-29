@@ -1,18 +1,20 @@
 package com.logicgate.payrollmanagement.employee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.logicgate.payrollmanagement.address.model.Address;
 import com.logicgate.payrollmanagement.baseaudit.BaseAudit;
 import com.logicgate.payrollmanagement.designation.model.Designation;
 import com.logicgate.payrollmanagement.image.model.Picture;
 import com.logicgate.payrollmanagement.jobgroup.model.JobGroup;
 import com.logicgate.payrollmanagement.nationality.model.Nationality;
-import com.logicgate.payrollmanagement.state.model.Province;
+import com.logicgate.payrollmanagement.nextofkin.model.NextOfKin;
 import com.logicgate.payrollmanagement.staticdata.EmployeeStatus;
 import com.logicgate.payrollmanagement.staticdata.Gender;
 import com.logicgate.payrollmanagement.userrole.model.Role;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -45,10 +47,14 @@ public class Employee extends BaseAudit {
     private String password;
 
     @Transient
-    @NotNull(message = "Confirm Password")
     private String confirmPassword;
+
+    @Email
     private String email;
     private String mobile;
+    @Column(nullable = false)
+    private String nationalIdentificationNumber;
+    private LocalDate nationalIdentificationDateIssued;
     private LocalDate hiredDate;
     private LocalDate retirementDate;
 
@@ -59,21 +65,19 @@ public class Employee extends BaseAudit {
     private Set<Nationality> nationalities = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private JobGroup jobGroup;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Designation designation;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "picture_id", nullable = false)
     private Picture picture;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<NextOfKin> nextOfKins = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "employee_roles",
             joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles = new HashSet<>();
-
 }

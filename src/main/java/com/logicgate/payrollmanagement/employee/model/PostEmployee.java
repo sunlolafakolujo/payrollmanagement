@@ -5,6 +5,7 @@ import com.logicgate.payrollmanagement.designation.model.Designation;
 import com.logicgate.payrollmanagement.image.model.Picture;
 import com.logicgate.payrollmanagement.jobgroup.model.JobGroup;
 import com.logicgate.payrollmanagement.nationality.model.Nationality;
+import com.logicgate.payrollmanagement.nextofkin.model.NextOfKin;
 import com.logicgate.payrollmanagement.staticdata.EmployeeStatus;
 import com.logicgate.payrollmanagement.staticdata.Gender;
 import com.logicgate.payrollmanagement.userrole.model.Role;
@@ -32,14 +33,16 @@ public class PostEmployee {
     private String confirmPassword;
     private String email;
     private String mobile;
+    private String nationalIdentificationNumber;
+    private LocalDate nationalIdentificationDateIssued;
     private LocalDate hiredDate;
     private LocalDate retirementDate;
     private EmployeeStatus employeeStatus;
     private Set<Nationality> nationalities = new HashSet<>();
     private Address address;
     private JobGroup jobGroup;
-    private Designation designation;
     private Picture picture;
+    private NextOfKin nextOfKin;
     private Set<Role> roles = new HashSet<>();
 
 }

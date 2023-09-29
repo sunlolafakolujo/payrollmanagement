@@ -34,7 +34,7 @@ public class AllowanceController {
         return new ResponseEntity<>(convertAllowanceToDto(allowanceService.fetchAllowanceById(id)), HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("/getAllAllowances")
     public ResponseEntity<List<AllowanceDto>> getAllowances(@RequestParam("pageNumber") int pageNumber,
                                                             @RequestParam("pageSize") int pageSize) {
         return new ResponseEntity<>(allowanceService.fetchAllowances(pageNumber, pageSize)
@@ -57,7 +57,7 @@ public class AllowanceController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/deleteAllowances")
     public ResponseEntity<?> deleteAllowance(){
         allowanceService.deleteAllowances();
         return ResponseEntity.noContent().build();

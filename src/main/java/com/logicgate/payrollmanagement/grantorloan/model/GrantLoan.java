@@ -35,7 +35,6 @@ public class GrantLoan extends BaseAudit {
 
     @Enumerated(EnumType.STRING)
     private GrantOrLoanType grantOrLoanType;
-
     private BigDecimal loanOrGrantAmount;
 
     @Enumerated(EnumType.STRING)
@@ -44,4 +43,6 @@ public class GrantLoan extends BaseAudit {
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Employee employee;
+
+//    private String supervisorApproval;
 }

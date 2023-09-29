@@ -1,4 +1,4 @@
-//package com.logicgate.payrollmanagement.config.security.passwordconfig;
+//package com.logicgate.payrollmanagement.configuration.security.passwordconfig;
 //
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
@@ -8,8 +8,7 @@
 //@Configuration
 //public class PasswordEncoderConfiguration {
 //    @Bean
-//    public PasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
-//
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder(10);
 //    }
 //}

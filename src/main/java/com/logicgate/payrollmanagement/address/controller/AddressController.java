@@ -29,7 +29,7 @@ public class AddressController {
         return new ResponseEntity<>(posted, HttpStatus.CREATED);
     }
 
-    @GetMapping("/address")
+    @GetMapping("/findAddressId")
     public ResponseEntity<AddressDto> getAddressById(@RequestParam("id") Long id) {
         return new ResponseEntity<>(convertAddressToDto(addressService.fetAddressById(id)), HttpStatus.OK);
     }

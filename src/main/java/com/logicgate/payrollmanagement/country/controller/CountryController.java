@@ -57,7 +57,7 @@ public class CountryController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping
+    @DeleteMapping("/")
     public ResponseEntity<?> deleteAllCountries() {
         countryService.deleteAllCountries();
         return ResponseEntity.noContent().build();

@@ -1,4 +1,4 @@
-package com.logicgate.payrollmanagement.config.mapper;
+package com.logicgate.payrollmanagement.configuration.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

@@ -25,6 +25,6 @@ public class JobGroup extends BaseAudit {
     private String jobGroupDescription;
 
     @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     private Set<Allowance> allowances = new HashSet<>();
 }

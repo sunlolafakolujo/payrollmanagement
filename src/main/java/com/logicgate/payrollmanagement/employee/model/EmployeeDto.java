@@ -5,8 +5,10 @@ import com.logicgate.payrollmanagement.designation.model.Designation;
 import com.logicgate.payrollmanagement.image.model.Picture;
 import com.logicgate.payrollmanagement.jobgroup.model.JobGroup;
 import com.logicgate.payrollmanagement.nationality.model.Nationality;
+import com.logicgate.payrollmanagement.nextofkin.model.NextOfKin;
 import com.logicgate.payrollmanagement.staticdata.EmployeeStatus;
 import com.logicgate.payrollmanagement.staticdata.Gender;
+import com.logicgate.payrollmanagement.staticdata.Relationship;
 import com.logicgate.payrollmanagement.userrole.model.Role;
 import lombok.*;
 
@@ -30,19 +32,19 @@ public class EmployeeDto {
     private Gender gender;
     private String email;
     private String mobile;
+    private String nationalIdentificationNumber;
+    private LocalDate nationalIdentificationDateIssued;
     private LocalDate hiredDate;
     private LocalDate retirementDate;
     private EmployeeStatus employeeStatus;
     private Set<Nationality> nationalities = new HashSet<>();
-    private Address address;
     private String houseNumber;
     private String streetName;
     private String city;
     private String landmark;
     private String stateName;
     private String countryName;
-    private JobGroup jobGroup;
-    private Designation designation;
     private Picture picture;
+    private Set<NextOfKin> nextOfKins;
     private Set<Role> roles = new HashSet<>();
 }
