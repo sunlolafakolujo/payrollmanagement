@@ -8,6 +8,7 @@ import com.logicgate.payrollmanagement.nationality.model.Nationality;
 import com.logicgate.payrollmanagement.nextofkin.model.NextOfKin;
 import com.logicgate.payrollmanagement.staticdata.EmployeeStatus;
 import com.logicgate.payrollmanagement.staticdata.Gender;
+import com.logicgate.payrollmanagement.staticdata.Title;
 import com.logicgate.payrollmanagement.userrole.model.Role;
 import lombok.*;
 
@@ -22,6 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class PostEmployee {
     private String employeeId;
+    private Title title;
     private String firstName;
     private String lastName;
     private String otherNames;
@@ -40,7 +42,6 @@ public class PostEmployee {
     private EmployeeStatus employeeStatus;
     private Set<Nationality> nationalities = new HashSet<>();
     private Address address;
-    private JobGroup jobGroup;
     private Picture picture;
     private NextOfKin nextOfKin;
     private Set<Role> roles = new HashSet<>();

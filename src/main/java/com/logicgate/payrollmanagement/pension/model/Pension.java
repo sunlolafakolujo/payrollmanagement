@@ -21,6 +21,8 @@ public class Pension extends BaseAudit {
             generator = "pension_generator")
     private Long id;
     private String pensionId;
+    private BigDecimal employeeContribution;
+    private BigDecimal employerContribution;
     private BigDecimal pensionAmount;
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Employee employee;

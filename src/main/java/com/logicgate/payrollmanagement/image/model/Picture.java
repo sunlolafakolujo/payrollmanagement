@@ -25,6 +25,6 @@ public class Picture {
     private String imageName;
     private String imageType;
 
-    @Column(length = 30000)
+    @Column(length = 10000)
     private byte[] picByte;
 }

@@ -11,8 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -42,9 +41,9 @@ public class EmployeeController {
     }
 
     @PostMapping("/addRoleToEmployee")
-    public ResponseEntity<?> addRoleToEmployee(@RequestParam("searchKey") String searchKey,
-                                               @RequestParam("roleName") String roleName) {
-        employeeService.addRoleToEmployee(searchKey, roleName);
+    public ResponseEntity<?> addRoleToEmployee(@RequestBody AddRoleToEmployee addRoleToEmployee) {
+        employeeService.addRoleToEmployee(addRoleToEmployee.getUsernameOrEmailOrMobileOrEmployeeId(),
+                addRoleToEmployee.getRoleName());
         return ResponseEntity.ok().body("Role successfully added to Employee");
     }
 
@@ -123,6 +122,8 @@ public class EmployeeController {
 
     private EmployeeDto convertEmployeeToDto(Employee employee) {
         EmployeeDto employeeDto = new EmployeeDto();
+        employeeDto.setEmployeeId(employee.getEmployeeId());
+        employeeDto.setTitle(employee.getTitle());
         employeeDto.setFirstName(employee.getFirstName());
         employeeDto.setLastName(employee.getLastName());
         employeeDto.setOtherNames(employee.getOtherNames());
@@ -145,7 +146,18 @@ public class EmployeeController {
         employeeDto.setStateName(employee.getAddress().getProvince().getStateName());
         employeeDto.setCountryName(employee.getAddress().getCountry().getCountryName());
         employeeDto.setPicture(employee.getPicture());
-        employeeDto.setNextOfKins(employee.getNextOfKins());
+        employeeDto.setNextOfKinFirstName(employee.getNextOfKin().getFirstName());
+        employeeDto.setNextOfKinLastName(employee.getNextOfKin().getLastName());
+        employeeDto.setNextOfKinEmail(employee.getNextOfKin().getEmail());
+        employeeDto.setNextOfKinMobile1(employee.getNextOfKin().getMobile1());
+        employeeDto.setNextOfKinMobile2(employee.getNextOfKin().getMobile2());
+        employeeDto.setRelationshipWithNextOfKin(employee.getNextOfKin().getRelationship());
+        employeeDto.setNextOfKinHouseNumber(employee.getNextOfKin().getAddress().getHouseNumber());
+        employeeDto.setNextOfKinStreetName(employee.getNextOfKin().getAddress().getStreetName());
+        employeeDto.setNextOfKinCity(employee.getNextOfKin().getAddress().getCity());
+        employeeDto.setNextOfKinLandmark(employee.getNextOfKin().getAddress().getLandmark());
+        employeeDto.setNextOfKinStateName(employee.getNextOfKin().getAddress().getProvince().getStateName());
+        employeeDto.setNextOfKinCountryName(employee.getNextOfKin().getAddress().getCountry().getCountryName());
         return employeeDto;
     }
 

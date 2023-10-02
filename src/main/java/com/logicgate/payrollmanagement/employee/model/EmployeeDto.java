@@ -9,6 +9,7 @@ import com.logicgate.payrollmanagement.nextofkin.model.NextOfKin;
 import com.logicgate.payrollmanagement.staticdata.EmployeeStatus;
 import com.logicgate.payrollmanagement.staticdata.Gender;
 import com.logicgate.payrollmanagement.staticdata.Relationship;
+import com.logicgate.payrollmanagement.staticdata.Title;
 import com.logicgate.payrollmanagement.userrole.model.Role;
 import lombok.*;
 
@@ -23,6 +24,7 @@ import java.util.Set;
 public class EmployeeDto {
     private Long id;
     private String employeeId;
+    private Title title;
     private String firstName;
     private String lastName;
     private String otherNames;
@@ -44,7 +46,18 @@ public class EmployeeDto {
     private String landmark;
     private String stateName;
     private String countryName;
+    private String nextOfKinFirstName;
+    private String nextOfKinLastName;
+    private String nextOfKinEmail;
+    private String nextOfKinMobile1;
+    private String nextOfKinMobile2;
+    private Relationship relationshipWithNextOfKin;
+    private String nextOfKinHouseNumber;
+    private String nextOfKinStreetName;
+    private String nextOfKinCity;
+    private String nextOfKinLandmark;
+    private String nextOfKinStateName;
+    private String nextOfKinCountryName;
     private Picture picture;
-    private Set<NextOfKin> nextOfKins;
     private Set<Role> roles = new HashSet<>();
 }

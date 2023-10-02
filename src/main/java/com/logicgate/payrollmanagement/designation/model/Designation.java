@@ -20,6 +20,6 @@ public class Designation extends BaseAudit {
             generator = "designation_generator")
     private Long id;
     private String designationTitle;
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Department department;
 }

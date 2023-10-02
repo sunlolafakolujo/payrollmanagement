@@ -10,6 +10,7 @@ import com.logicgate.payrollmanagement.nationality.model.Nationality;
 import com.logicgate.payrollmanagement.nextofkin.model.NextOfKin;
 import com.logicgate.payrollmanagement.staticdata.EmployeeStatus;
 import com.logicgate.payrollmanagement.staticdata.Gender;
+import com.logicgate.payrollmanagement.staticdata.Title;
 import com.logicgate.payrollmanagement.userrole.model.Role;
 import lombok.*;
 
@@ -34,6 +35,9 @@ public class Employee extends BaseAudit {
             generator = "employee_generator")
     private Long id;
     private String employeeId;
+
+    @Enumerated(EnumType.STRING)
+    private Title title;
     private String firstName;
     private String lastName;
     private String otherNames;
@@ -72,8 +76,8 @@ public class Employee extends BaseAudit {
     @JoinColumn(name = "picture_id", nullable = false)
     private Picture picture;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<NextOfKin> nextOfKins = new HashSet<>();
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private NextOfKin nextOfKin;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "employee_roles",
