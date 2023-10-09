@@ -48,8 +48,8 @@ class AllowanceControllerTest extends AbstractContainerBaseTest {
 
     @Test
     void testThatWhenAddAllowanceMethodIsCalled_thenAllowanceIsAdded() throws Exception {
-        allowance.setAllowanceType(AllowanceType.BUSH);
-        allowance.setAllowanceAmount(new BigDecimal(250000));
+//        allowance.setAllowanceType(AllowanceType.BUSH);
+        allowance.setTransportationAllowance(new BigDecimal(250000));
 
         mockMvc.perform(post("/api/payroll/addAllowance")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -91,7 +91,7 @@ class AllowanceControllerTest extends AbstractContainerBaseTest {
     void testThatWhenYouCallEditAllowanceMethod_thenAllowanceIsUpdated() throws Exception {
         Long id = 22L;
         allowance = allowanceService.fetchAllowanceById(id);
-        allowance.setAllowanceAmount(new BigDecimal(1056000));
+        allowance.setLunchAllowance(new BigDecimal(1056000));
         allowanceService.editAllowance(allowance, id);
 
         mockMvc.perform(put("/api/payroll/edit?id=22")

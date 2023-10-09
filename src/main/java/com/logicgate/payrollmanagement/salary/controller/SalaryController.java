@@ -1,9 +1,6 @@
 package com.logicgate.payrollmanagement.salary.controller;
 
-import com.logicgate.payrollmanagement.salary.model.EditSalary;
-import com.logicgate.payrollmanagement.salary.model.PostSalary;
-import com.logicgate.payrollmanagement.salary.model.Salary;
-import com.logicgate.payrollmanagement.salary.model.SalaryDto;
+import com.logicgate.payrollmanagement.salary.model.*;
 import com.logicgate.payrollmanagement.salary.service.SalaryService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -11,22 +8,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/payroll")
-@AllArgsConstructor
-public class SalaryController {
-    private final SalaryService salaryService;
-    private final ModelMapper modelMapper;
+public record SalaryController(SalaryService salaryService, ModelMapper modelMapper) {
 
-    @PostMapping("/addSalary")
+    @PostMapping("/addMonthlySalaryEarner")
     public ResponseEntity<PostSalary> addSalary(@RequestParam("employeeId") String employeeId,
                                                 @RequestBody PostSalary postSalary) {
         Salary salary = modelMapper.map(postSalary, Salary.class);
-        Salary post = salaryService.addSalary(employeeId, salary);
+        Salary post = salaryService.addMonthlySalaryEarner(employeeId, salary);
         PostSalary posted = modelMapper.map(post, PostSalary.class);
+        return new ResponseEntity<>(posted, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/addDayRateSalaryEarner")
+    public ResponseEntity<PostDayRateSalary> addDayRateSalary(@RequestParam("employeeId") String employeeId,
+                                                @RequestBody PostDayRateSalary postSalary) {
+        Salary salary = modelMapper.map(postSalary, Salary.class);
+        Salary post = salaryService.addDayRateSalaryEarner(employeeId, salary);
+        PostDayRateSalary posted = modelMapper.map(post, PostDayRateSalary.class);
         return new ResponseEntity<>(posted, HttpStatus.CREATED);
     }
 
@@ -38,6 +42,17 @@ public class SalaryController {
     @GetMapping("findSalaryByEmployeeId")
     public ResponseEntity<SalaryDto> getEmployeeSalary(@RequestParam("employeeId") String employeeId) {
         return new ResponseEntity<>(convertSalaryToDto(salaryService.fetchEmployeeSalary(employeeId)), HttpStatus.OK);
+    }
+
+    @GetMapping("/findEmployeeSalaryWithARange")
+    public ResponseEntity<List<SalaryDto>> getEmployeeAnnualSalaryWithARange(@RequestParam("key1") BigDecimal salary1,
+                                                                             @RequestParam("key2") BigDecimal salary2,
+                                                                             @RequestParam("pageNumber") int pageNumber,
+                                                                             @RequestParam("pageSize") int pageSize) {
+        return new ResponseEntity<>(salaryService.fetchEmployeesWithinSalaryRange(salary1, salary2, pageNumber, pageSize)
+                .stream()
+                .map(this::convertSalaryToDto)
+                .collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @GetMapping("findAllEmployeeSalary")
@@ -59,13 +74,13 @@ public class SalaryController {
     }
 
     @DeleteMapping("/deleteEmployeeSalary")
-    public ResponseEntity<?> deleteEmployeeSalary(@RequestParam("employeeId") String employeeId){
+    public ResponseEntity<?> deleteEmployeeSalary(@RequestParam("employeeId") String employeeId) {
         salaryService.deleteSalaryByEmployeeId(employeeId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/deleteAllEmployeesSalaries")
-    public ResponseEntity<?> deleteAllEmployeesSalaries(){
+    public ResponseEntity<?> deleteAllEmployeesSalaries() {
         salaryService.deleteAllSalaries();
         return ResponseEntity.noContent().build();
     }
@@ -78,7 +93,9 @@ public class SalaryController {
         salaryDto.setFirstName(salary.getEmployee().getFirstName());
         salaryDto.setLastName(salary.getEmployee().getLastName());
         salaryDto.setJobGroupCode(salary.getJobGroup().getJobGroupCode());
-        salaryDto.setSalaryAmount(salary.getMonthlySalaryAmount());
+        salaryDto.setDayRateAmount(salary.getDayRateAmount());
+        salaryDto.setNumberOfDaysWorkedPerMonth(salary.getNumberOfDaysWorkedPerMonth());
+        salaryDto.setMonthlySalaryAmount(salary.getMonthlySalaryAmount());
         salaryDto.setAnnualSalaryAmount(salary.getAnnulSalaryAmount());
         salaryDto.setAllowances(salary.getJobGroup().getAllowances());
         return salaryDto;

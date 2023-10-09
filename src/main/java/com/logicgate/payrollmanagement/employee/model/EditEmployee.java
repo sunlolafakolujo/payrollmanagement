@@ -7,6 +7,7 @@ import com.logicgate.payrollmanagement.jobgroup.model.JobGroup;
 import com.logicgate.payrollmanagement.nationality.model.Nationality;
 import com.logicgate.payrollmanagement.nextofkin.model.NextOfKin;
 import com.logicgate.payrollmanagement.staticdata.EmployeeStatus;
+import com.logicgate.payrollmanagement.staticdata.Relationship;
 import com.logicgate.payrollmanagement.userrole.model.Role;
 import lombok.*;
 
@@ -33,5 +34,6 @@ public class EditEmployee {
     private Designation designation;
     private Picture picture;
     private NextOfKin nextOfKin;
+    private Relationship relationshipWithNextOfKin;
 //    private Set<Role> roles = new HashSet<>();
 }

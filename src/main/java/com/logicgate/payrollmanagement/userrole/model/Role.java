@@ -1,5 +1,6 @@
 package com.logicgate.payrollmanagement.userrole.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.logicgate.payrollmanagement.employee.model.Employee;
 import lombok.*;
 
@@ -24,6 +25,8 @@ public class Role {
     private String roleName;
     private String roleDescription;
 
+    @JsonIgnore
+    @ToString.Exclude
     @ManyToMany(mappedBy = "roles")
     private Set<Employee> employees = new HashSet<>();
 }

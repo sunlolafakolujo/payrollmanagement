@@ -6,13 +6,16 @@ import com.logicgate.payrollmanagement.designation.repository.DesignationReposit
 import com.logicgate.payrollmanagement.employee.exception.EmployeeNotFoundException;
 import com.logicgate.payrollmanagement.employee.model.Employee;
 import com.logicgate.payrollmanagement.employee.repository.EmployeeRepository;
+import com.logicgate.payrollmanagement.employeedesignation.exception.EmployeeDesignationNofFoundException;
 import com.logicgate.payrollmanagement.employeedesignation.model.EmployeeDesignation;
 import com.logicgate.payrollmanagement.employeedesignation.repository.EmployeeDesignationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -36,16 +39,23 @@ public class EmployeeDesignationServiceImpl implements EmployeeDesignationServic
 
     @Override
     public List<EmployeeDesignation> fetchEmployeesDesignation(int pageNumber, int pageSize) {
-        return null;
+        return employeeDesignationRepository.findAll(PageRequest.of(pageNumber, pageSize)).toList();
     }
 
     @Override
     public EmployeeDesignation editEmployeeDesignation(EmployeeDesignation employeeDesignation, Long id) {
-        return null;
+        EmployeeDesignation savedEmployeeDesignation = employeeDesignationRepository.findById(id)
+                .orElseThrow(() -> new EmployeeDesignationNofFoundException("EmployeeDesignation " + id + " not found"));
+        if (Objects.nonNull(employeeDesignation.getDesignation()) && !"".equals(employeeDesignation.getDesignation())) {
+            savedEmployeeDesignation.setDesignation(employeeDesignation.getDesignation());
+        }
+        return employeeDesignationRepository.save(savedEmployeeDesignation);
     }
 
     @Override
     public void deleteEmployeeDesignation(Long id) {
-
+        if (employeeDesignationRepository.existsById(id)) {
+            employeeDesignationRepository.deleteById(id);
+        } else throw new EmployeeDesignationNofFoundException("EmployeeDesignation " + id + " does not exist");
     }
 }

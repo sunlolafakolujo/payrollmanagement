@@ -16,10 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/payroll")
-@AllArgsConstructor
-public class AllowanceController {
-    private final AllowanceService allowanceService;
-    private final ModelMapper modelMapper;
+public record AllowanceController(AllowanceService allowanceService, ModelMapper modelMapper) {
 
     @PostMapping("/addAllowance")
     public ResponseEntity<PostAllowance> addAllowance(@RequestBody PostAllowance postAllowance) {
@@ -66,8 +63,11 @@ public class AllowanceController {
     private AllowanceDto convertAllowanceToDto(Allowance allowance) {
         AllowanceDto allowanceDto = new AllowanceDto();
         allowanceDto.setId(allowance.getId());
-        allowanceDto.setAllowanceType(allowance.getAllowanceType());
-        allowanceDto.setAllowanceAmount(allowance.getAllowanceAmount());
+        allowanceDto.setHousingAllowance(allowance.getHousingAllowance());
+        allowanceDto.setMedicalAllowance(allowance.getMedicalAllowance());
+        allowanceDto.setTransportationAllowance(allowance.getTransportationAllowance());
+        allowanceDto.setLunchAllowance(allowance.getLunchAllowance());
+
         return allowanceDto;
     }
 }

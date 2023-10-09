@@ -19,11 +19,12 @@ public class PensionAdministrator {
             sequenceName = "pensionAdministrator_generator",allocationSize = 10)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="pensionAdministrator_generator")
     private Long id;
+    private String pensionAdministratorCode;
     private String administratorName;
     private String contactPerson;
     private String email;
     private String phone;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Address> address=new HashSet<>();
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Address address;
 }

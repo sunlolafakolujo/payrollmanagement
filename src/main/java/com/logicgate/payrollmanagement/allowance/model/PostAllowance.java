@@ -10,6 +10,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostAllowance {
-    private AllowanceType allowanceType;
-    private BigDecimal allowanceAmount;
+    private BigDecimal housingAllowanceAmount;
+    private BigDecimal transportationAllowanceAmount;
 }

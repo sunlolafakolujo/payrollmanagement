@@ -3,20 +3,18 @@ package com.logicgate.payrollmanagement.employee.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.logicgate.payrollmanagement.address.model.Address;
 import com.logicgate.payrollmanagement.baseaudit.BaseAudit;
-import com.logicgate.payrollmanagement.designation.model.Designation;
 import com.logicgate.payrollmanagement.image.model.Picture;
-import com.logicgate.payrollmanagement.jobgroup.model.JobGroup;
 import com.logicgate.payrollmanagement.nationality.model.Nationality;
 import com.logicgate.payrollmanagement.nextofkin.model.NextOfKin;
 import com.logicgate.payrollmanagement.staticdata.EmployeeStatus;
 import com.logicgate.payrollmanagement.staticdata.Gender;
+import com.logicgate.payrollmanagement.staticdata.Relationship;
 import com.logicgate.payrollmanagement.staticdata.Title;
 import com.logicgate.payrollmanagement.userrole.model.Role;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -66,6 +64,7 @@ public class Employee extends BaseAudit {
     private EmployeeStatus employeeStatus;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
     private Set<Nationality> nationalities = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -77,7 +76,11 @@ public class Employee extends BaseAudit {
     private Picture picture;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "next_Of_Kin_id", nullable = false)
     private NextOfKin nextOfKin;
+
+    @Enumerated(EnumType.STRING)
+    private Relationship relationshipWithNextOfKin;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "employee_roles",

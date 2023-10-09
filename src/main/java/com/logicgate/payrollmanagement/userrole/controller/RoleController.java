@@ -16,10 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/payroll")
-@AllArgsConstructor
-public class RoleController {
-    private final RoleService roleService;
-    private final ModelMapper modelMapper;
+public record RoleController(RoleService roleService,ModelMapper modelMapper) {
 
     @PostMapping("addRole")
     public ResponseEntity<PostRole> addRole(@RequestBody PostRole postRole) {

@@ -1,5 +1,7 @@
 package com.logicgate.payrollmanagement.image.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.logicgate.payrollmanagement.employee.model.Employee;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,4 +29,9 @@ public class Picture {
 
     @Column(length = 10000)
     private byte[] picByte;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToOne(mappedBy = "picture")
+    private Employee employee;
 }

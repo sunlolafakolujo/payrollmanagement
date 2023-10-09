@@ -17,10 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "api/payroll")
-@AllArgsConstructor
-public class JobGroupController {
-    private final JobGroupService jobGroupService;
-    private final ModelMapper modelMapper;
+public record JobGroupController(JobGroupService jobGroupService, ModelMapper modelMapper) {
 
     @PostMapping("/addJobGroup")
     public ResponseEntity<PostJoGroup> addJobGroup(@RequestBody PostJoGroup postJoGroup) {

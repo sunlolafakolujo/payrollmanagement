@@ -47,41 +47,25 @@ class JobGroupControllerTest extends AbstractContainerBaseTest {
 
     JobGroup jobGroup;
     Allowance allowance;
-    Allowance allowance1;
-    Allowance allowance2;
-    Allowance allowance3;
-    Allowance allowance4;
 
     @BeforeEach
     void setUp() {
         jobGroup = new JobGroup();
         allowance = new Allowance();
-        allowance1 = new Allowance();
-        allowance2 = new Allowance();
-        allowance3 = new Allowance();
-        allowance4 = new Allowance();
+
     }
 
     @Test
     void testThatWhenAddJobGroupMethodIsCalled_thenJobGroupIsAdded() throws Exception {
 
-        allowance.setAllowanceType(AllowanceType.HOUSING);
-        allowance.setAllowanceAmount(new BigDecimal(3500000));
 
-        allowance1.setAllowanceType(AllowanceType.MEDICAL);
-        allowance1.setAllowanceAmount(new BigDecimal(4000000));
-
-        allowance2.setAllowanceType(AllowanceType.LUNCH);
-        allowance2.setAllowanceAmount(new BigDecimal(105600));
-
-        allowance3.setAllowanceType(AllowanceType.TRANSPORT);
-        allowance3.setAllowanceAmount(new BigDecimal(1300000));
+        allowance.setMedicalAllowance(new BigDecimal(3500000));
+        allowance.setHousingAllowance(new BigDecimal(4000000));
+        allowance.setLunchAllowance(new BigDecimal(105600));
+        allowance.setTransportationAllowance(new BigDecimal(1300000));
 
         Set<Allowance> allowances = new HashSet<>();
         allowances.add(allowance);
-        allowances.add(allowance1);
-        allowances.add(allowance2);
-        allowances.add(allowance3);
 
         jobGroup.setJobGroupCode("6");
         jobGroup.setJobGroupDescription("Job group 6");

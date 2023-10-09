@@ -17,7 +17,9 @@ public class SalaryDto {
     private String firstName;
     private String lastName;
     private String jobGroupCode;
-    private BigDecimal salaryAmount;
+    private BigDecimal dayRateAmount;
+    private Integer numberOfDaysWorkedPerMonth;
+    private BigDecimal monthlySalaryAmount;
     private BigDecimal annualSalaryAmount;
     private Set<Allowance> allowances;
 }

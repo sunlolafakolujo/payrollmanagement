@@ -30,7 +30,6 @@ public class EmployeeDto {
     private String otherNames;
     private LocalDate dateOfBirth;
     private Integer age;
-    private String stateOfOrigin;
     private Gender gender;
     private String email;
     private String mobile;
@@ -39,6 +38,7 @@ public class EmployeeDto {
     private LocalDate hiredDate;
     private LocalDate retirementDate;
     private EmployeeStatus employeeStatus;
+    private String stateOfOrigin;
     private Set<Nationality> nationalities = new HashSet<>();
     private String houseNumber;
     private String streetName;

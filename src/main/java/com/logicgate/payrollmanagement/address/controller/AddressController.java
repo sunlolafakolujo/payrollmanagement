@@ -16,10 +16,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/payroll")
-@AllArgsConstructor
-public class AddressController {
-    private final AddressService addressService;
-    private final ModelMapper modelMapper;
+//@AllArgsConstructor
+public record AddressController(AddressService addressService,ModelMapper modelMapper) {
 
     @PostMapping("/addAddress")
     public ResponseEntity<PostAddress> addAddress(@RequestBody PostAddress postAddress) {

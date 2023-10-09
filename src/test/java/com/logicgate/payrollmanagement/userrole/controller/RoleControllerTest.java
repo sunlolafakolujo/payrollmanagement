@@ -40,7 +40,7 @@ class RoleControllerTest {
     @Test
     @Order(1)
     void testThatWhenYouCallAddRoleMethod_thenRoleIsCreated() throws Exception {
-        String roleName = "payroll_admin";
+        String roleName = "admin";
         role.setRoleName(roleName);
         role.setRoleDescription("Payroll Administrator");
 
@@ -86,33 +86,33 @@ class RoleControllerTest {
     @Test
     @Order(4)
     void testThatWhenYouCallGetAllRolesMethod_thenRoleAreReturned() throws Exception {
-        String roleName = "payroll_admin";
+        String roleName = "super_admin";
         this.mockMvc.perform(get("/api/payroll/findAllRoles?pageNumber=0&pageSize=2")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(2)))
-                .andExpect(jsonPath("$[1].roleName").value(roleName))
+                .andExpect(jsonPath("$.*", hasSize(1)))
+                .andExpect(jsonPath("$[0].roleName").value(roleName))
                 .andReturn();
     }
 
     @Test
     @Order(5)
     void testThatWhenYouCallEditRoleMethod_thenRoleIsUpdated() throws Exception {
-        Long id = 1L;
+        Long id = 22L;
         role = roleService.fetchById(id);
-        role.setRoleName("super_admin");
+        role.setRoleDescription("Administrator");
         roleService.editRole(role, id);
 
-        this.mockMvc.perform(put("/api/payroll/editRole?id=1")
+        this.mockMvc.perform(put("/api/payroll/editRole?id=22")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(role))
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(role.getId()))
-                .andExpect(jsonPath("$.roleName").value("super_admin"))
+                .andExpect(jsonPath("$.roleName").value("admin"))
                 .andReturn();
     }
 

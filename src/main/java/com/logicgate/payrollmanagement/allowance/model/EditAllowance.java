@@ -12,6 +12,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class EditAllowance {
     private Long id;
-    private AllowanceType allowanceType;
-    private BigDecimal allowanceAmount;
+    //    private AllowanceType allowanceType;
+    private BigDecimal housingAllowanceAmount;
+    private BigDecimal transportationAllowanceAmount;
+    private BigDecimal medicalAllowance;
+    private BigDecimal lunchAllowance;
 }

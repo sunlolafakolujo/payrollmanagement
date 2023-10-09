@@ -16,10 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/payroll")
-@AllArgsConstructor
-public class EmployeeBankDetailController {
-    private final EmployeeBankDetailService employeeBankDetailService;
-    private final ModelMapper modelMapper;
+public record EmployeeBankDetailController(EmployeeBankDetailService employeeBankDetailService,ModelMapper modelMapper) {
 
     @PostMapping("/addEmployeeBankDetail")
     public ResponseEntity<PostEmployeeBankDetail> addEmployeeBankDetail(@RequestBody PostEmployeeBankDetail postEmployeeBankDetail,

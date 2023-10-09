@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class EditSalary {
     private Long id;
-    private BigDecimal salaryAmount;
+    private BigDecimal monthlySalaryAmount;
+    private BigDecimal dayRateAmount;
     private Employee employee;
 }

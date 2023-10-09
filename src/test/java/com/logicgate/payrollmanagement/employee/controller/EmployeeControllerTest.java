@@ -8,6 +8,7 @@ import com.logicgate.payrollmanagement.country.model.Country;
 import com.logicgate.payrollmanagement.country.service.CountryService;
 import com.logicgate.payrollmanagement.designation.model.Designation;
 import com.logicgate.payrollmanagement.designation.service.DesignationService;
+import com.logicgate.payrollmanagement.employee.model.AddRoleToEmployee;
 import com.logicgate.payrollmanagement.employee.model.Employee;
 import com.logicgate.payrollmanagement.employee.service.EmployeeService;
 import com.logicgate.payrollmanagement.image.model.Picture;
@@ -20,6 +21,8 @@ import com.logicgate.payrollmanagement.state.model.Province;
 import com.logicgate.payrollmanagement.state.service.StateService;
 import com.logicgate.payrollmanagement.staticdata.EmployeeStatus;
 import com.logicgate.payrollmanagement.staticdata.Gender;
+import com.logicgate.payrollmanagement.userrole.model.Role;
+import com.logicgate.payrollmanagement.userrole.service.RoleService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -59,6 +62,8 @@ class EmployeeControllerTest extends AbstractContainerBaseTest {
     @Autowired
     private CountryService countryService;
     @Autowired
+    private RoleService roleService;
+    @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
@@ -71,6 +76,7 @@ class EmployeeControllerTest extends AbstractContainerBaseTest {
     Picture picture;
     Province province;
     Country country;
+    Role role;
 
     @BeforeEach
     void setUp() {
@@ -82,13 +88,14 @@ class EmployeeControllerTest extends AbstractContainerBaseTest {
         picture = new Picture();
         province = new Province();
         country = new Country();
+        role = new Role();
     }
 
     @Test
     @Order(1)
     void testThatWhenYouCallAddEmployeeMethod_thenEmployeeIsSaved() throws Exception {
-        country=countryService.fetchCountryByName("Nigeria");
-        province=stateService.fetchStateByName("Bayelsa");
+        country = countryService.fetchCountryByName("Nigeria");
+        province = stateService.fetchStateByName("Bayelsa");
         province = stateService.fetchState(402L);
         country = countryService.fetchCountry(802L);
         address.setHouseNumber("5");
@@ -142,7 +149,20 @@ class EmployeeControllerTest extends AbstractContainerBaseTest {
 
     @Test
     @Order(2)
-    void addRoleToEmployee() {
+    void testThatWhenYouAddRoleToEmployeeMethod_RoleIsAddedToEmployee() throws Exception {
+        Role role = roleService.fetchByRoleName("admin");
+        employee = employeeService.fetchUsernameOrEmailOrMobileOrEmployeeId("username");
+        AddRoleToEmployee addRoleToEmployee = new AddRoleToEmployee();
+        addRoleToEmployee.setUsernameOrEmailOrMobileOrEmployeeId(employee.getUsername());
+        addRoleToEmployee.setRoleName(role.getRoleName());
+
+        this.mockMvc.perform(post("/api/payroll/addRoleToEmployee")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(addRoleToEmployee))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
     }
 
     @Test

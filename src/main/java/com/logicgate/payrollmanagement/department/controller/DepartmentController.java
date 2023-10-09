@@ -16,10 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "api/payroll")
-@AllArgsConstructor
-public class DepartmentController {
-    private final DepartmentService departmentService;
-    private final ModelMapper modelMapper;
+public record DepartmentController(DepartmentService departmentService, ModelMapper modelMapper) {
 
     @PostMapping("/addDepartment")
     public ResponseEntity<PostDepartment> addDepartment(@RequestBody PostDepartment postDepartment) {

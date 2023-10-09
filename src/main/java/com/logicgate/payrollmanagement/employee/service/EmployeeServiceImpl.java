@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
@@ -36,18 +35,19 @@ public class EmployeeServiceImpl implements EmployeeService {
                     + " or" + employee.getMobile() + " already exists");
         }
         if (!employee.getPassword().equals(employee.getConfirmPassword())) {
-            throw new EmployeeNotFoundException("Password does not match");
+            throw new EmployeeNotFoundException("Passwords do not match");
         }
         if (!validatePhoneNumber(employee)) {
             throw new EmployeeNotFoundException("Mobile phone must be in one of these formats: " +
                     "10 or 11 digit, 0000 000 0000, 000 000 0000, 000-000-0000, 000-000-0000 ext0000");
         }
         employee.setRetirementDate(employee.getDateOfBirth().plusYears(60));
-        employee.setEmployeeId(employee.getHiredDate()
-                .toString().substring(0, 8).concat(String.valueOf(new Random().nextInt(1000))));
+        employee.setEmployeeId(employee.getHiredDate().toString().substring(0, 8)
+                .concat(String.valueOf(new Random().nextInt(1000))));
 //        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
         employee.setAge(Period.between(employee.getDateOfBirth(), LocalDate.now()).getYears());
         employee.setRetirementDate(employee.getDateOfBirth().plusYears(60));
+        employee.setEmail(employee.getFirstName().concat(employee.getLastName().concat("@dapafol.com")));
         return employeeRepository.save(employee);
     }
 
@@ -123,6 +123,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         if (Objects.nonNull(employee.getPicture()) && !"".equals(employee.getPicture())) {
             savedEmployee.setPicture(employee.getPicture());
+        }
+        if (Objects.nonNull(employee.getNextOfKin()) && "".equals(employee.getNextOfKin())) {
+            savedEmployee.setNextOfKin(employee.getNextOfKin());
+        }
+        if (Objects.nonNull(employee.getRelationshipWithNextOfKin()) && "".equals(employee.getRelationshipWithNextOfKin())) {
+            savedEmployee.setRelationshipWithNextOfKin(employee.getRelationshipWithNextOfKin());
         }
         return employeeRepository.save(savedEmployee);
     }

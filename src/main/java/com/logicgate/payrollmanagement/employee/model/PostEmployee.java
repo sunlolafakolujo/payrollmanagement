@@ -8,6 +8,7 @@ import com.logicgate.payrollmanagement.nationality.model.Nationality;
 import com.logicgate.payrollmanagement.nextofkin.model.NextOfKin;
 import com.logicgate.payrollmanagement.staticdata.EmployeeStatus;
 import com.logicgate.payrollmanagement.staticdata.Gender;
+import com.logicgate.payrollmanagement.staticdata.Relationship;
 import com.logicgate.payrollmanagement.staticdata.Title;
 import com.logicgate.payrollmanagement.userrole.model.Role;
 import lombok.*;
@@ -44,6 +45,7 @@ public class PostEmployee {
     private Address address;
     private Picture picture;
     private NextOfKin nextOfKin;
+    private Relationship relationshipWithNextOfKin;
     private Set<Role> roles = new HashSet<>();
 
 }

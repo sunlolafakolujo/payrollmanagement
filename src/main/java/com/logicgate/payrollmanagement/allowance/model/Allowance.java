@@ -22,7 +22,10 @@ public class Allowance extends BaseAudit {
             generator = "allowance_generator")
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private AllowanceType allowanceType;
-    private BigDecimal allowanceAmount;
+//    @Enumerated(EnumType.STRING)
+//    private AllowanceType allowanceType;
+    private BigDecimal housingAllowance;
+    private BigDecimal transportationAllowance;
+    private BigDecimal medicalAllowance;
+    private BigDecimal lunchAllowance;
 }

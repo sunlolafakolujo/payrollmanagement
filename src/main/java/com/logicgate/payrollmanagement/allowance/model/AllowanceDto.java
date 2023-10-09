@@ -4,6 +4,7 @@ import com.logicgate.payrollmanagement.staticdata.AllowanceType;
 import lombok.*;
 
 import java.math.BigDecimal;
+
 @Getter
 @Setter
 @ToString
@@ -11,6 +12,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class AllowanceDto {
     private Long id;
-    private AllowanceType allowanceType;
-    private BigDecimal allowanceAmount;
+    //    private AllowanceType allowanceType;
+    private BigDecimal housingAllowance;
+    private BigDecimal transportationAllowance;
+    private BigDecimal medicalAllowance;
+    private BigDecimal lunchAllowance;
 }

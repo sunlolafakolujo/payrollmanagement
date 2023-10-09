@@ -16,10 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/payroll")
-@AllArgsConstructor
-public class DesignationController {
-    private final DesignationService designationService;
-    private final ModelMapper modelMapper;
+public record DesignationController(DesignationService designationService,ModelMapper modelMapper ) {
 
     @PostMapping("/addDesignation")
     public ResponseEntity<PostDesignation> addDesignation(@RequestBody PostDesignation postDesignation) {

@@ -6,13 +6,14 @@ import com.logicgate.payrollmanagement.pensionmanager.model.PensionAdministrator
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.math.BigDecimal;
 @Entity
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Pension extends BaseAudit {
     @Id
     @SequenceGenerator(name="sequence_generator",
@@ -23,9 +24,14 @@ public class Pension extends BaseAudit {
     private String pensionId;
     private BigDecimal employeeContribution;
     private BigDecimal employerContribution;
-    private BigDecimal pensionAmount;
+    private BigDecimal annualPensionAmount;
+
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Employee employee;
+
+    @Email
+    private String employeePersonalEmail;
+
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private PensionAdministrator pensionAdministrator;
 }

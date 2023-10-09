@@ -21,10 +21,10 @@ public class AllowanceServiceImpl implements AllowanceService {
 
     @Override
     public Allowance addAllowance(Allowance allowance) {
-        Optional<Allowance> optionalAllowance = allowanceRepository.findAllowanceByType(allowance.getAllowanceType());
-        if (optionalAllowance.isPresent()) {
-            throw new AllowanceNotFoundException("Allowance " + allowance.getAllowanceType() + " already exist");
-        }
+//        Optional<Allowance> optionalAllowance = allowanceRepository.findAllowanceByType(allowance.getAllowanceType());
+//        if (optionalAllowance.isPresent()) {
+//            throw new AllowanceNotFoundException("Allowance " + allowance.getAllowanceType() + " already exist");
+//        }
         return allowanceRepository.save(allowance);
     }
 
@@ -43,11 +43,17 @@ public class AllowanceServiceImpl implements AllowanceService {
     public Allowance editAllowance(Allowance allowance, Long id) {
         Allowance savedAllowance = allowanceRepository.findById(id)
                 .orElseThrow(() -> new AllowanceNotFoundException("Allowance ID " + id + " not found"));
-        if (Objects.nonNull(allowance.getAllowanceType()) && !"".equals(allowance.getAllowanceType())) {
-            savedAllowance.setAllowanceType(allowance.getAllowanceType());
+        if (Objects.nonNull(allowance.getTransportationAllowance()) && !"".equals(allowance.getTransportationAllowance())) {
+            savedAllowance.setTransportationAllowance(allowance.getTransportationAllowance());
         }
-        if (Objects.nonNull(allowance.getAllowanceAmount()) && !"".equals(allowance.getAllowanceAmount())) {
-            savedAllowance.setAllowanceAmount(allowance.getAllowanceAmount());
+        if (Objects.nonNull(allowance.getHousingAllowance()) && !"".equals(allowance.getHousingAllowance())) {
+            savedAllowance.setHousingAllowance(allowance.getHousingAllowance());
+        }
+        if (Objects.nonNull(allowance.getLunchAllowance()) && !"".equals(allowance.getLunchAllowance())) {
+            savedAllowance.setLunchAllowance(allowance.getLunchAllowance());
+        }
+        if (Objects.nonNull(allowance.getMedicalAllowance()) && !"".equals(allowance.getMedicalAllowance())) {
+            savedAllowance.setMedicalAllowance(allowance.getMedicalAllowance());
         }
         return allowanceRepository.save(savedAllowance);
     }

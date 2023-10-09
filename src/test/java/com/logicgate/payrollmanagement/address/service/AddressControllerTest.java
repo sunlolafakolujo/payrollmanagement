@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class AddressServiceImplTest {
+class AddressControllerTest {
     @Autowired
     private AddressService addressService;
     @Autowired
@@ -74,12 +74,12 @@ class AddressServiceImplTest {
     @Test
     void testThatWhenYouCallFetAddressByIdMethod_thenAddressIsReturned() throws Exception {
 
-        this.mockMvc.perform(get("/api/payroll/findAddressId?id=102")
+        this.mockMvc.perform(get("/api/payroll/findAddressId?id=112")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.houseNumber").value("24"))
+                .andExpect(jsonPath("$.houseNumber").value("30"))
                 .andReturn();
     }
 

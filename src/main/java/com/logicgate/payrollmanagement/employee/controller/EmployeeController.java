@@ -3,7 +3,6 @@ package com.logicgate.payrollmanagement.employee.controller;
 import com.logicgate.payrollmanagement.employee.model.*;
 import com.logicgate.payrollmanagement.employee.service.EmployeeService;
 import com.logicgate.payrollmanagement.image.model.Picture;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,10 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/payroll")
-@AllArgsConstructor
-public class EmployeeController {
-    private final EmployeeService employeeService;
-    private final ModelMapper modelMapper;
+public record EmployeeController(EmployeeService employeeService, ModelMapper modelMapper) {
 
     @PostMapping(value = "/addEmployee", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PostEmployee> addEmployee(@RequestPart("employee") PostEmployee postEmployee,
@@ -122,6 +118,7 @@ public class EmployeeController {
 
     private EmployeeDto convertEmployeeToDto(Employee employee) {
         EmployeeDto employeeDto = new EmployeeDto();
+        employeeDto.setId(employee.getId());
         employeeDto.setEmployeeId(employee.getEmployeeId());
         employeeDto.setTitle(employee.getTitle());
         employeeDto.setFirstName(employee.getFirstName());
@@ -158,6 +155,8 @@ public class EmployeeController {
         employeeDto.setNextOfKinLandmark(employee.getNextOfKin().getAddress().getLandmark());
         employeeDto.setNextOfKinStateName(employee.getNextOfKin().getAddress().getProvince().getStateName());
         employeeDto.setNextOfKinCountryName(employee.getNextOfKin().getAddress().getCountry().getCountryName());
+        employeeDto.setRelationshipWithNextOfKin(employee.getRelationshipWithNextOfKin());
+        employeeDto.setRoles(employee.getRoles());
         return employeeDto;
     }
 
