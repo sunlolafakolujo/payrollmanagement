@@ -31,8 +31,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         Optional<Employee> optionalEmployee = employeeRepository.findEmployeeByUsernameOrEmailOrMobileOrEmployeeId(
                 employee.getUsername(), employee.getEmail(), employee.getMobile(), employee.getEmployeeId());
         if (optionalEmployee.isPresent()) {
-            throw new EmployeeNotFoundException("Employee " + employee.getEmail() + " or" + employee.getUsername()
-                    + " or" + employee.getMobile() + " already exists");
+            throw new EmployeeNotFoundException("Employee " + employee.getEmail() + " or " + employee.getUsername()
+                    + " or " + employee.getMobile() + " already exists");
         }
         if (!employee.getPassword().equals(employee.getConfirmPassword())) {
             throw new EmployeeNotFoundException("Passwords do not match");
@@ -126,9 +126,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         if (Objects.nonNull(employee.getNextOfKin()) && "".equals(employee.getNextOfKin())) {
             savedEmployee.setNextOfKin(employee.getNextOfKin());
-        }
-        if (Objects.nonNull(employee.getRelationshipWithNextOfKin()) && "".equals(employee.getRelationshipWithNextOfKin())) {
-            savedEmployee.setRelationshipWithNextOfKin(employee.getRelationshipWithNextOfKin());
         }
         return employeeRepository.save(savedEmployee);
     }

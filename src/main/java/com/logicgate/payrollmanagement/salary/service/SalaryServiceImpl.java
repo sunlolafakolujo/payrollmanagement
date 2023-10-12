@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -43,7 +46,7 @@ public class SalaryServiceImpl implements SalaryService {
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee ID " + employeeId + " does not exist"));
         salary.setEmployee(employee);
         salary.setSalaryType(SalaryType.DAY_RATE);
-        salary.setMonthlySalaryAmount(monthlyDayRateSalary(salary.getEmployee().getEmployeeId()));
+        salary.setMonthlySalaryAmount(salary.getDayRateAmount().multiply(new BigDecimal(salary.getNumberOfDaysWorkedPerMonth())));
         salary.setAnnulSalaryAmount(totalDayRateAnnualSalary(salary.getEmployee().getEmployeeId()));
         return salaryRepository.save(salary);
     }
@@ -116,13 +119,5 @@ public class SalaryServiceImpl implements SalaryService {
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee " + employeeId + " not found"));
         Salary salary = salaryRepository.findSalaryByEmployee(employee);
         return salary.getMonthlySalaryAmount().multiply(new BigDecimal(12));
-    }
-
-    private BigDecimal monthlyDayRateSalary(String employeeId) {
-        Employee employee = employeeRepository.findEmployeeByUsernameOrEmailOrMobileOrEmployeeId(employeeId,
-                        employeeId, employeeId, employeeId)
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee " + employeeId + " not found"));
-        Salary salary = salaryRepository.findSalaryByEmployee(employee);
-        return salary.getDayRateAmount().multiply(new BigDecimal(salary.getNumberOfDaysWorkedPerMonth()));
     }
 }

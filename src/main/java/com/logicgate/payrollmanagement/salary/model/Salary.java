@@ -8,6 +8,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -37,4 +38,22 @@ public class Salary extends BaseAudit {
     @JoinColumn(nullable = false)
     private Employee employee;
 
+    public Salary(SalaryType salaryType, BigDecimal monthlySalaryAmount, BigDecimal annulSalaryAmount,
+                  JobGroup jobGroup, Employee employee) {
+        this.salaryType = salaryType;
+        this.monthlySalaryAmount = monthlySalaryAmount;
+        this.annulSalaryAmount = annulSalaryAmount;
+        this.jobGroup = jobGroup;
+        this.employee = employee;
+    }
+
+    public Salary(SalaryType salaryType, BigDecimal dayRateAmount, Integer numberOfDaysWorkedPerMonth,
+                  BigDecimal monthlySalaryAmount, BigDecimal annulSalaryAmount, Employee employee) {
+        this.salaryType = salaryType;
+        this.dayRateAmount = dayRateAmount;
+        this.numberOfDaysWorkedPerMonth = numberOfDaysWorkedPerMonth;
+        this.monthlySalaryAmount = monthlySalaryAmount;
+        this.annulSalaryAmount = annulSalaryAmount;
+        this.employee = employee;
+    }
 }

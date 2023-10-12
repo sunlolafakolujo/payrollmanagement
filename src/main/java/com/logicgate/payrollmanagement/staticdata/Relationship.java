@@ -5,6 +5,7 @@ public enum Relationship {
     MOTHER("Mother"),
     SIBLING("Sibling"),
     SPOUSE("Spouse"),
+    COUSIN("Cousin"),
     OTHERS("Other");
 
     private final String relationship;

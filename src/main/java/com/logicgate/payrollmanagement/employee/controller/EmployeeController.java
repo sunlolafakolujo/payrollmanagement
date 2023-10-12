@@ -148,14 +148,13 @@ public record EmployeeController(EmployeeService employeeService, ModelMapper mo
         employeeDto.setNextOfKinEmail(employee.getNextOfKin().getEmail());
         employeeDto.setNextOfKinMobile1(employee.getNextOfKin().getMobile1());
         employeeDto.setNextOfKinMobile2(employee.getNextOfKin().getMobile2());
-        employeeDto.setRelationshipWithNextOfKin(employee.getNextOfKin().getRelationship());
+        employeeDto.setRelationshipWithNextOfKin(employee.getNextOfKin().getRelationshipWithNextOfKin());
         employeeDto.setNextOfKinHouseNumber(employee.getNextOfKin().getAddress().getHouseNumber());
         employeeDto.setNextOfKinStreetName(employee.getNextOfKin().getAddress().getStreetName());
         employeeDto.setNextOfKinCity(employee.getNextOfKin().getAddress().getCity());
         employeeDto.setNextOfKinLandmark(employee.getNextOfKin().getAddress().getLandmark());
         employeeDto.setNextOfKinStateName(employee.getNextOfKin().getAddress().getProvince().getStateName());
         employeeDto.setNextOfKinCountryName(employee.getNextOfKin().getAddress().getCountry().getCountryName());
-        employeeDto.setRelationshipWithNextOfKin(employee.getRelationshipWithNextOfKin());
         employeeDto.setRoles(employee.getRoles());
         return employeeDto;
     }

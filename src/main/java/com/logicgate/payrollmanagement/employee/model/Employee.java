@@ -15,6 +15,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,8 +37,14 @@ public class Employee extends BaseAudit {
 
     @Enumerated(EnumType.STRING)
     private Title title;
+
+    @Pattern(regexp="[A-Za-z\\s]+", message="First Name should contains alphabets only")
     private String firstName;
+
+    @Pattern(regexp="[A-Za-z\\s]+", message="Last Name should contains alphabets only")
     private String lastName;
+
+    @Pattern(regexp="[A-Za-z\\s]+", message="Other Names should contains alphabets only")
     private String otherNames;
     private LocalDate dateOfBirth;
     private Integer age;
@@ -46,6 +53,7 @@ public class Employee extends BaseAudit {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String username;
+    @Pattern(regexp="[A-Za-z0-9!@#$%^&*_]{8,15}", message="Please Enter a valid Password")
     private String password;
 
     @Transient
@@ -78,9 +86,6 @@ public class Employee extends BaseAudit {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "next_Of_Kin_id", nullable = false)
     private NextOfKin nextOfKin;
-
-    @Enumerated(EnumType.STRING)
-    private Relationship relationshipWithNextOfKin;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "employee_roles",

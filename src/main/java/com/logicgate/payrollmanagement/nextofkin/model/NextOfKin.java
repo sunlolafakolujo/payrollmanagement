@@ -35,7 +35,7 @@ public class NextOfKin {
     private String mobile2;
 
     @Enumerated(EnumType.STRING)
-    private Relationship relationship;
+    private Relationship relationshipWithNextOfKin;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Address address;

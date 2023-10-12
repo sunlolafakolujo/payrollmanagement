@@ -21,9 +21,6 @@ public class Allowance extends BaseAudit {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "allowance_generator")
     private Long id;
-
-//    @Enumerated(EnumType.STRING)
-//    private AllowanceType allowanceType;
     private BigDecimal housingAllowance;
     private BigDecimal transportationAllowance;
     private BigDecimal medicalAllowance;

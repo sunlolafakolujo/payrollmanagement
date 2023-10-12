@@ -21,10 +21,6 @@ public class AllowanceServiceImpl implements AllowanceService {
 
     @Override
     public Allowance addAllowance(Allowance allowance) {
-//        Optional<Allowance> optionalAllowance = allowanceRepository.findAllowanceByType(allowance.getAllowanceType());
-//        if (optionalAllowance.isPresent()) {
-//            throw new AllowanceNotFoundException("Allowance " + allowance.getAllowanceType() + " already exist");
-//        }
         return allowanceRepository.save(allowance);
     }
 
